@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RegistroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="alm_alumno">
+    <Key>
+      <PropertyRef Name="alm_id" />
+    </Key>
+    <Property Name="alm_id" Type="int" Nullable="false" />
+    <Property Name="alm_nombre" Type="varchar" MaxLength="300" />
+    <Property Name="alm_edad" Type="int" />
+    <Property Name="alm_sexo" Type="varchar" MaxLength="100" />
+    <Property Name="alm_observacion" Type="varchar" MaxLength="300" />
+    <Property Name="alm_created_at" Type="datetime" />
+    <Property Name="alm_updated_at" Type="datetime" />
+  </EntityType>
+  <EntityType Name="grd_grado">
+    <Key>
+      <PropertyRef Name="grd_id" />
+    </Key>
+    <Property Name="grd_id" Type="int" Nullable="false" />
+    <Property Name="grd_nombre" Type="varchar" MaxLength="100" />
+    <Property Name="grd_created_at" Type="datetime" />
+    <Property Name="grd_updated_at" Type="datetime" />
+  </EntityType>
+  <EntityType Name="mat_materia">
+    <Key>
+      <PropertyRef Name="mat_id" />
+    </Key>
+    <Property Name="mat_id" Type="int" Nullable="false" />
+    <Property Name="mat_nombre" Type="varchar" MaxLength="100" />
+    <Property Name="mat_created_at" Type="datetime" />
+    <Property Name="mat_updated_at" Type="datetime" />
+  </EntityType>
+  <EntityType Name="mxg_materiasxgrado">
+    <Key>
+      <PropertyRef Name="mxg_id" />
+    </Key>
+    <Property Name="mxg_id" Type="int" Nullable="false" />
+    <Property Name="mxg_id_grad" Type="int" />
+    <Property Name="mxg_id_mat" Type="int" />
+    <Property Name="mxg_created_at" Type="datetime" />
+    <Property Name="mxg_updated_at" Type="datetime" />
+  </EntityType>
+  <Association Name="FK__mxg_mater__mxg_i__2A4B4B5E">
+    <End Role="grd_grado" Type="Self.grd_grado" Multiplicity="0..1" />
+    <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="grd_grado">
+        <PropertyRef Name="grd_id" />
+      </Principal>
+      <Dependent Role="mxg_materiasxgrado">
+        <PropertyRef Name="mxg_id_grad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__mxg_mater__mxg_i__2B3F6F97">
+    <End Role="mat_materia" Type="Self.mat_materia" Multiplicity="0..1" />
+    <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="mat_materia">
+        <PropertyRef Name="mat_id" />
+      </Principal>
+      <Dependent Role="mxg_materiasxgrado">
+        <PropertyRef Name="mxg_id_mat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_actualizar_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="nombre" Type="varchar" Mode="In" />
+    <Parameter Name="edad" Type="varchar" Mode="In" />
+    <Parameter Name="sexo" Type="varchar" Mode="In" />
+    <Parameter Name="observacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_delete_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminar_grd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_eliminar_mat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_insertar_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="alm_id" Type="int" Mode="In" />
+    <Parameter Name="nombre" Type="varchar" Mode="In" />
+    <Parameter Name="edad" Type="int" Mode="In" />
+    <Parameter Name="sexo" Type="varchar" Mode="In" />
+    <Parameter Name="observacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_list_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_list_grado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_list_mat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_list_mxg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="RegistroModelStoreContainer">
+    <EntitySet Name="alm_alumno" EntityType="Self.alm_alumno" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="grd_grado" EntityType="Self.grd_grado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="mat_materia" EntityType="Self.mat_materia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="mxg_materiasxgrado" EntityType="Self.mxg_materiasxgrado" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__mxg_mater__mxg_i__2A4B4B5E" Association="Self.FK__mxg_mater__mxg_i__2A4B4B5E">
+      <End Role="grd_grado" EntitySet="grd_grado" />
+      <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+    </AssociationSet>
+    <AssociationSet Name="FK__mxg_mater__mxg_i__2B3F6F97" Association="Self.FK__mxg_mater__mxg_i__2B3F6F97">
+      <End Role="mat_materia" EntitySet="mat_materia" />
+      <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

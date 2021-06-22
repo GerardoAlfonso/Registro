@@ -69,6 +69,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_actualizar_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="edad" Type="varchar" Mode="In" />
+          <Parameter Name="sexo" Type="varchar" Mode="In" />
+          <Parameter Name="observacion" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_delete_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -77,6 +84,13 @@
         </Function>
         <Function Name="sp_eliminar_mat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_insertar_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="alm_id" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="edad" Type="int" Mode="In" />
+          <Parameter Name="sexo" Type="varchar" Mode="In" />
+          <Parameter Name="observacion" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_list_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_list_grado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -189,10 +203,24 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminar_grd">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminar_mat">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_insertar_alm" ReturnType="Collection(RegistroModel.sp_insertar_alm_Result)">
+            <Parameter Name="alm_id" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="edad" Mode="In" Type="Int32" />
+            <Parameter Name="sexo" Mode="In" Type="String" />
+            <Parameter Name="observacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_actualizar_alm">
             <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="edad" Mode="In" Type="String" />
+            <Parameter Name="sexo" Mode="In" Type="String" />
+            <Parameter Name="observacion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_list_alm_Result">
@@ -222,6 +250,15 @@
           <Property Type="Int32" Name="mxg_id_mat" Nullable="true" />
           <Property Type="DateTime" Name="mxg_created_at" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="mxg_updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_insertar_alm_Result">
+          <Property Type="Int32" Name="alm_id" Nullable="false" />
+          <Property Type="String" Name="alm_nombre" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="alm_edad" Nullable="true" />
+          <Property Type="String" Name="alm_sexo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="alm_observacion" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="alm_created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="alm_updated_at" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -320,6 +357,20 @@
           <FunctionImportMapping FunctionImportName="sp_delete_alm" FunctionName="RegistroModel.Store.sp_delete_alm" />
           <FunctionImportMapping FunctionImportName="sp_eliminar_grd" FunctionName="RegistroModel.Store.sp_eliminar_grd" />
           <FunctionImportMapping FunctionImportName="sp_eliminar_mat" FunctionName="RegistroModel.Store.sp_eliminar_mat" />
+          <FunctionImportMapping FunctionImportName="sp_insertar_alm" FunctionName="RegistroModel.Store.sp_insertar_alm">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RegistroModel.sp_insertar_alm_Result">
+                <ScalarProperty Name="alm_id" ColumnName="alm_id" />
+                <ScalarProperty Name="alm_nombre" ColumnName="alm_nombre" />
+                <ScalarProperty Name="alm_edad" ColumnName="alm_edad" />
+                <ScalarProperty Name="alm_sexo" ColumnName="alm_sexo" />
+                <ScalarProperty Name="alm_observacion" ColumnName="alm_observacion" />
+                <ScalarProperty Name="alm_created_at" ColumnName="alm_created_at" />
+                <ScalarProperty Name="alm_updated_at" ColumnName="alm_updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_actualizar_alm" FunctionName="RegistroModel.Store.sp_actualizar_alm" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -159,6 +159,9 @@
     <Compile Include="Models\mxg_materiasxgrado.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_insertar_alm_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_list_alm_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -225,7 +228,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\CRUD\alumnos.cshtml" />
-    <Content Include="Views\CRUD\editar_alumnos.cshtml" />
+    <Content Include="Views\CRUD\editar_alumno.cshtml" />
     <Content Include="Views\CRUD\editar_grado.cshtml" />
     <Content Include="Views\CRUD\editar_materia.cshtml" />
     <Content Include="Views\CRUD\grado.cshtml" />

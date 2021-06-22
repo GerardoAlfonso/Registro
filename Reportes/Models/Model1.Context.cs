@@ -78,5 +78,55 @@ namespace Reportes.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminar_mat", idParameter);
         }
+    
+        public virtual ObjectResult<sp_insertar_alm_Result> sp_insertar_alm(Nullable<int> alm_id, string nombre, Nullable<int> edad, string sexo, string observacion)
+        {
+            var alm_idParameter = alm_id.HasValue ?
+                new ObjectParameter("alm_id", alm_id) :
+                new ObjectParameter("alm_id", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var edadParameter = edad.HasValue ?
+                new ObjectParameter("edad", edad) :
+                new ObjectParameter("edad", typeof(int));
+    
+            var sexoParameter = sexo != null ?
+                new ObjectParameter("sexo", sexo) :
+                new ObjectParameter("sexo", typeof(string));
+    
+            var observacionParameter = observacion != null ?
+                new ObjectParameter("observacion", observacion) :
+                new ObjectParameter("observacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_insertar_alm_Result>("sp_insertar_alm", alm_idParameter, nombreParameter, edadParameter, sexoParameter, observacionParameter);
+        }
+    
+        public virtual int sp_actualizar_alm(Nullable<int> id, string nombre, string edad, string sexo, string observacion)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var edadParameter = edad != null ?
+                new ObjectParameter("edad", edad) :
+                new ObjectParameter("edad", typeof(string));
+    
+            var sexoParameter = sexo != null ?
+                new ObjectParameter("sexo", sexo) :
+                new ObjectParameter("sexo", typeof(string));
+    
+            var observacionParameter = observacion != null ?
+                new ObjectParameter("observacion", observacion) :
+                new ObjectParameter("observacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizar_alm", idParameter, nombreParameter, edadParameter, sexoParameter, observacionParameter);
+        }
     }
 }

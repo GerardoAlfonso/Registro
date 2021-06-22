@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RegistroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="alm_alumno">
+    <Key>
+      <PropertyRef Name="alm_id" />
+    </Key>
+    <Property Name="alm_id" Type="Int32" Nullable="false" />
+    <Property Name="alm_nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="alm_edad" Type="Int32" />
+    <Property Name="alm_sexo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="alm_observacion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="alm_created_at" Type="DateTime" Precision="3" />
+    <Property Name="alm_updated_at" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="grd_grado">
+    <Key>
+      <PropertyRef Name="grd_id" />
+    </Key>
+    <Property Name="grd_id" Type="Int32" Nullable="false" />
+    <Property Name="grd_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="grd_created_at" Type="DateTime" Precision="3" />
+    <Property Name="grd_updated_at" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="mxg_materiasxgrado" Relationship="Self.FK__mxg_mater__mxg_i__2A4B4B5E" FromRole="grd_grado" ToRole="mxg_materiasxgrado" />
+  </EntityType>
+  <EntityType Name="mat_materia">
+    <Key>
+      <PropertyRef Name="mat_id" />
+    </Key>
+    <Property Name="mat_id" Type="Int32" Nullable="false" />
+    <Property Name="mat_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="mat_created_at" Type="DateTime" Precision="3" />
+    <Property Name="mat_updated_at" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="mxg_materiasxgrado" Relationship="Self.FK__mxg_mater__mxg_i__2B3F6F97" FromRole="mat_materia" ToRole="mxg_materiasxgrado" />
+  </EntityType>
+  <EntityType Name="mxg_materiasxgrado">
+    <Key>
+      <PropertyRef Name="mxg_id" />
+    </Key>
+    <Property Name="mxg_id" Type="Int32" Nullable="false" />
+    <Property Name="mxg_id_grad" Type="Int32" />
+    <Property Name="mxg_id_mat" Type="Int32" />
+    <Property Name="mxg_created_at" Type="DateTime" Precision="3" />
+    <Property Name="mxg_updated_at" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="grd_grado" Relationship="Self.FK__mxg_mater__mxg_i__2A4B4B5E" FromRole="mxg_materiasxgrado" ToRole="grd_grado" />
+    <NavigationProperty Name="mat_materia" Relationship="Self.FK__mxg_mater__mxg_i__2B3F6F97" FromRole="mxg_materiasxgrado" ToRole="mat_materia" />
+  </EntityType>
+  <Association Name="FK__mxg_mater__mxg_i__2A4B4B5E">
+    <End Role="grd_grado" Type="Self.grd_grado" Multiplicity="0..1" />
+    <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="grd_grado">
+        <PropertyRef Name="grd_id" />
+      </Principal>
+      <Dependent Role="mxg_materiasxgrado">
+        <PropertyRef Name="mxg_id_grad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__mxg_mater__mxg_i__2B3F6F97">
+    <End Role="mat_materia" Type="Self.mat_materia" Multiplicity="0..1" />
+    <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="mat_materia">
+        <PropertyRef Name="mat_id" />
+      </Principal>
+      <Dependent Role="mxg_materiasxgrado">
+        <PropertyRef Name="mxg_id_mat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DataBase" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="alm_alumno" EntityType="Self.alm_alumno" />
+    <EntitySet Name="grd_grado" EntityType="Self.grd_grado" />
+    <EntitySet Name="mat_materia" EntityType="Self.mat_materia" />
+    <EntitySet Name="mxg_materiasxgrado" EntityType="Self.mxg_materiasxgrado" />
+    <AssociationSet Name="FK__mxg_mater__mxg_i__2A4B4B5E" Association="Self.FK__mxg_mater__mxg_i__2A4B4B5E">
+      <End Role="grd_grado" EntitySet="grd_grado" />
+      <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+    </AssociationSet>
+    <AssociationSet Name="FK__mxg_mater__mxg_i__2B3F6F97" Association="Self.FK__mxg_mater__mxg_i__2B3F6F97">
+      <End Role="mat_materia" EntitySet="mat_materia" />
+      <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+    </AssociationSet>
+    <FunctionImport Name="sp_list_alm" ReturnType="Collection(RegistroModel.sp_list_alm_Result)" />
+    <FunctionImport Name="sp_list_grado" ReturnType="Collection(RegistroModel.sp_list_grado_Result)" />
+    <FunctionImport Name="sp_list_mat" ReturnType="Collection(RegistroModel.sp_list_mat_Result)" />
+    <FunctionImport Name="sp_list_mxg" ReturnType="Collection(RegistroModel.sp_list_mxg_Result)" />
+    <FunctionImport Name="sp_delete_alm">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_eliminar_grd">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_eliminar_mat">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_insertar_alm" ReturnType="Collection(RegistroModel.sp_insertar_alm_Result)">
+      <Parameter Name="alm_id" Mode="In" Type="Int32" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="edad" Mode="In" Type="Int32" />
+      <Parameter Name="sexo" Mode="In" Type="String" />
+      <Parameter Name="observacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_actualizar_alm">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="edad" Mode="In" Type="String" />
+      <Parameter Name="sexo" Mode="In" Type="String" />
+      <Parameter Name="observacion" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_list_alm_Result">
+    <Property Type="Int32" Name="alm_id" Nullable="false" />
+    <Property Type="String" Name="alm_nombre" Nullable="true" MaxLength="300" />
+    <Property Type="Int32" Name="alm_edad" Nullable="true" />
+    <Property Type="String" Name="alm_sexo" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="alm_observacion" Nullable="true" MaxLength="300" />
+    <Property Type="DateTime" Name="alm_created_at" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="alm_updated_at" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="sp_list_grado_Result">
+    <Property Type="Int32" Name="grd_id" Nullable="false" />
+    <Property Type="String" Name="grd_nombre" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="grd_created_at" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="grd_updated_at" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="sp_list_mat_Result">
+    <Property Type="Int32" Name="mat_id" Nullable="false" />
+    <Property Type="String" Name="mat_nombre" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="mat_created_at" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="mat_updated_at" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="sp_list_mxg_Result">
+    <Property Type="Int32" Name="mxg_id" Nullable="false" />
+    <Property Type="Int32" Name="mxg_id_grad" Nullable="true" />
+    <Property Type="Int32" Name="mxg_id_mat" Nullable="true" />
+    <Property Type="DateTime" Name="mxg_created_at" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="mxg_updated_at" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="sp_insertar_alm_Result">
+    <Property Type="Int32" Name="alm_id" Nullable="false" />
+    <Property Type="String" Name="alm_nombre" Nullable="true" MaxLength="300" />
+    <Property Type="Int32" Name="alm_edad" Nullable="true" />
+    <Property Type="String" Name="alm_sexo" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="alm_observacion" Nullable="true" MaxLength="300" />
+    <Property Type="DateTime" Name="alm_created_at" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="alm_updated_at" Nullable="true" Precision="23" />
+  </ComplexType>
+</Schema>
