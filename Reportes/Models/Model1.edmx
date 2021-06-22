@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RegistroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="alm_alumno">
+          <Key>
+            <PropertyRef Name="alm_id" />
+          </Key>
+          <Property Name="alm_id" Type="int" Nullable="false" />
+          <Property Name="alm_nombre" Type="varchar" MaxLength="300" />
+          <Property Name="alm_edad" Type="int" />
+          <Property Name="alm_sexo" Type="varchar" MaxLength="100" />
+          <Property Name="alm_observacion" Type="varchar" MaxLength="300" />
+          <Property Name="alm_created_at" Type="datetime" />
+          <Property Name="alm_updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="grd_grado">
+          <Key>
+            <PropertyRef Name="grd_id" />
+          </Key>
+          <Property Name="grd_id" Type="int" Nullable="false" />
+          <Property Name="grd_nombre" Type="varchar" MaxLength="100" />
+          <Property Name="grd_created_at" Type="datetime" />
+          <Property Name="grd_updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="mat_materia">
+          <Key>
+            <PropertyRef Name="mat_id" />
+          </Key>
+          <Property Name="mat_id" Type="int" Nullable="false" />
+          <Property Name="mat_nombre" Type="varchar" MaxLength="100" />
+          <Property Name="mat_created_at" Type="datetime" />
+          <Property Name="mat_updated_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="mxg_materiasxgrado">
+          <Key>
+            <PropertyRef Name="mxg_id" />
+          </Key>
+          <Property Name="mxg_id" Type="int" Nullable="false" />
+          <Property Name="mxg_id_grad" Type="int" />
+          <Property Name="mxg_id_mat" Type="int" />
+          <Property Name="mxg_created_at" Type="datetime" />
+          <Property Name="mxg_updated_at" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__mxg_mater__mxg_i__2A4B4B5E">
+          <End Role="grd_grado" Type="Self.grd_grado" Multiplicity="0..1" />
+          <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="grd_grado">
+              <PropertyRef Name="grd_id" />
+            </Principal>
+            <Dependent Role="mxg_materiasxgrado">
+              <PropertyRef Name="mxg_id_grad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__mxg_mater__mxg_i__2B3F6F97">
+          <End Role="mat_materia" Type="Self.mat_materia" Multiplicity="0..1" />
+          <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mat_materia">
+              <PropertyRef Name="mat_id" />
+            </Principal>
+            <Dependent Role="mxg_materiasxgrado">
+              <PropertyRef Name="mxg_id_mat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_delete_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_eliminar_grd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_eliminar_mat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_list_alm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_list_grado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_list_mat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_list_mxg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="RegistroModelStoreContainer">
+          <EntitySet Name="alm_alumno" EntityType="Self.alm_alumno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="grd_grado" EntityType="Self.grd_grado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mat_materia" EntityType="Self.mat_materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mxg_materiasxgrado" EntityType="Self.mxg_materiasxgrado" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__mxg_mater__mxg_i__2A4B4B5E" Association="Self.FK__mxg_mater__mxg_i__2A4B4B5E">
+            <End Role="grd_grado" EntitySet="grd_grado" />
+            <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__mxg_mater__mxg_i__2B3F6F97" Association="Self.FK__mxg_mater__mxg_i__2B3F6F97">
+            <End Role="mat_materia" EntitySet="mat_materia" />
+            <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RegistroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="alm_alumno">
+          <Key>
+            <PropertyRef Name="alm_id" />
+          </Key>
+          <Property Name="alm_id" Type="Int32" Nullable="false" />
+          <Property Name="alm_nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="alm_edad" Type="Int32" />
+          <Property Name="alm_sexo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="alm_observacion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="alm_created_at" Type="DateTime" Precision="3" />
+          <Property Name="alm_updated_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="grd_grado">
+          <Key>
+            <PropertyRef Name="grd_id" />
+          </Key>
+          <Property Name="grd_id" Type="Int32" Nullable="false" />
+          <Property Name="grd_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="grd_created_at" Type="DateTime" Precision="3" />
+          <Property Name="grd_updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="mxg_materiasxgrado" Relationship="Self.FK__mxg_mater__mxg_i__2A4B4B5E" FromRole="grd_grado" ToRole="mxg_materiasxgrado" />
+        </EntityType>
+        <EntityType Name="mat_materia">
+          <Key>
+            <PropertyRef Name="mat_id" />
+          </Key>
+          <Property Name="mat_id" Type="Int32" Nullable="false" />
+          <Property Name="mat_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mat_created_at" Type="DateTime" Precision="3" />
+          <Property Name="mat_updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="mxg_materiasxgrado" Relationship="Self.FK__mxg_mater__mxg_i__2B3F6F97" FromRole="mat_materia" ToRole="mxg_materiasxgrado" />
+        </EntityType>
+        <EntityType Name="mxg_materiasxgrado">
+          <Key>
+            <PropertyRef Name="mxg_id" />
+          </Key>
+          <Property Name="mxg_id" Type="Int32" Nullable="false" />
+          <Property Name="mxg_id_grad" Type="Int32" />
+          <Property Name="mxg_id_mat" Type="Int32" />
+          <Property Name="mxg_created_at" Type="DateTime" Precision="3" />
+          <Property Name="mxg_updated_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="grd_grado" Relationship="Self.FK__mxg_mater__mxg_i__2A4B4B5E" FromRole="mxg_materiasxgrado" ToRole="grd_grado" />
+          <NavigationProperty Name="mat_materia" Relationship="Self.FK__mxg_mater__mxg_i__2B3F6F97" FromRole="mxg_materiasxgrado" ToRole="mat_materia" />
+        </EntityType>
+        <Association Name="FK__mxg_mater__mxg_i__2A4B4B5E">
+          <End Role="grd_grado" Type="Self.grd_grado" Multiplicity="0..1" />
+          <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="grd_grado">
+              <PropertyRef Name="grd_id" />
+            </Principal>
+            <Dependent Role="mxg_materiasxgrado">
+              <PropertyRef Name="mxg_id_grad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__mxg_mater__mxg_i__2B3F6F97">
+          <End Role="mat_materia" Type="Self.mat_materia" Multiplicity="0..1" />
+          <End Role="mxg_materiasxgrado" Type="Self.mxg_materiasxgrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mat_materia">
+              <PropertyRef Name="mat_id" />
+            </Principal>
+            <Dependent Role="mxg_materiasxgrado">
+              <PropertyRef Name="mxg_id_mat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataBase" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="alm_alumno" EntityType="Self.alm_alumno" />
+          <EntitySet Name="grd_grado" EntityType="Self.grd_grado" />
+          <EntitySet Name="mat_materia" EntityType="Self.mat_materia" />
+          <EntitySet Name="mxg_materiasxgrado" EntityType="Self.mxg_materiasxgrado" />
+          <AssociationSet Name="FK__mxg_mater__mxg_i__2A4B4B5E" Association="Self.FK__mxg_mater__mxg_i__2A4B4B5E">
+            <End Role="grd_grado" EntitySet="grd_grado" />
+            <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__mxg_mater__mxg_i__2B3F6F97" Association="Self.FK__mxg_mater__mxg_i__2B3F6F97">
+            <End Role="mat_materia" EntitySet="mat_materia" />
+            <End Role="mxg_materiasxgrado" EntitySet="mxg_materiasxgrado" />
+          </AssociationSet>
+          <FunctionImport Name="sp_list_alm" ReturnType="Collection(RegistroModel.sp_list_alm_Result)" />
+          <FunctionImport Name="sp_list_grado" ReturnType="Collection(RegistroModel.sp_list_grado_Result)" />
+          <FunctionImport Name="sp_list_mat" ReturnType="Collection(RegistroModel.sp_list_mat_Result)" />
+          <FunctionImport Name="sp_list_mxg" ReturnType="Collection(RegistroModel.sp_list_mxg_Result)" />
+          <FunctionImport Name="sp_delete_alm">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_eliminar_grd">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_eliminar_mat">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_list_alm_Result">
+          <Property Type="Int32" Name="alm_id" Nullable="false" />
+          <Property Type="String" Name="alm_nombre" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="alm_edad" Nullable="true" />
+          <Property Type="String" Name="alm_sexo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="alm_observacion" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="alm_created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="alm_updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_list_grado_Result">
+          <Property Type="Int32" Name="grd_id" Nullable="false" />
+          <Property Type="String" Name="grd_nombre" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="grd_created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="grd_updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_list_mat_Result">
+          <Property Type="Int32" Name="mat_id" Nullable="false" />
+          <Property Type="String" Name="mat_nombre" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="mat_created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="mat_updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_list_mxg_Result">
+          <Property Type="Int32" Name="mxg_id" Nullable="false" />
+          <Property Type="Int32" Name="mxg_id_grad" Nullable="true" />
+          <Property Type="Int32" Name="mxg_id_mat" Nullable="true" />
+          <Property Type="DateTime" Name="mxg_created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="mxg_updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RegistroModelStoreContainer" CdmEntityContainer="DataBase">
+          <EntitySetMapping Name="alm_alumno">
+            <EntityTypeMapping TypeName="RegistroModel.alm_alumno">
+              <MappingFragment StoreEntitySet="alm_alumno">
+                <ScalarProperty Name="alm_id" ColumnName="alm_id" />
+                <ScalarProperty Name="alm_nombre" ColumnName="alm_nombre" />
+                <ScalarProperty Name="alm_edad" ColumnName="alm_edad" />
+                <ScalarProperty Name="alm_sexo" ColumnName="alm_sexo" />
+                <ScalarProperty Name="alm_observacion" ColumnName="alm_observacion" />
+                <ScalarProperty Name="alm_created_at" ColumnName="alm_created_at" />
+                <ScalarProperty Name="alm_updated_at" ColumnName="alm_updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grd_grado">
+            <EntityTypeMapping TypeName="RegistroModel.grd_grado">
+              <MappingFragment StoreEntitySet="grd_grado">
+                <ScalarProperty Name="grd_id" ColumnName="grd_id" />
+                <ScalarProperty Name="grd_nombre" ColumnName="grd_nombre" />
+                <ScalarProperty Name="grd_created_at" ColumnName="grd_created_at" />
+                <ScalarProperty Name="grd_updated_at" ColumnName="grd_updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mat_materia">
+            <EntityTypeMapping TypeName="RegistroModel.mat_materia">
+              <MappingFragment StoreEntitySet="mat_materia">
+                <ScalarProperty Name="mat_id" ColumnName="mat_id" />
+                <ScalarProperty Name="mat_nombre" ColumnName="mat_nombre" />
+                <ScalarProperty Name="mat_created_at" ColumnName="mat_created_at" />
+                <ScalarProperty Name="mat_updated_at" ColumnName="mat_updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mxg_materiasxgrado">
+            <EntityTypeMapping TypeName="RegistroModel.mxg_materiasxgrado">
+              <MappingFragment StoreEntitySet="mxg_materiasxgrado">
+                <ScalarProperty Name="mxg_id" ColumnName="mxg_id" />
+                <ScalarProperty Name="mxg_id_grad" ColumnName="mxg_id_grad" />
+                <ScalarProperty Name="mxg_id_mat" ColumnName="mxg_id_mat" />
+                <ScalarProperty Name="mxg_created_at" ColumnName="mxg_created_at" />
+                <ScalarProperty Name="mxg_updated_at" ColumnName="mxg_updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_list_alm" FunctionName="RegistroModel.Store.sp_list_alm">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RegistroModel.sp_list_alm_Result">
+                <ScalarProperty Name="alm_id" ColumnName="alm_id" />
+                <ScalarProperty Name="alm_nombre" ColumnName="alm_nombre" />
+                <ScalarProperty Name="alm_edad" ColumnName="alm_edad" />
+                <ScalarProperty Name="alm_sexo" ColumnName="alm_sexo" />
+                <ScalarProperty Name="alm_observacion" ColumnName="alm_observacion" />
+                <ScalarProperty Name="alm_created_at" ColumnName="alm_created_at" />
+                <ScalarProperty Name="alm_updated_at" ColumnName="alm_updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_list_grado" FunctionName="RegistroModel.Store.sp_list_grado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RegistroModel.sp_list_grado_Result">
+                <ScalarProperty Name="grd_id" ColumnName="grd_id" />
+                <ScalarProperty Name="grd_nombre" ColumnName="grd_nombre" />
+                <ScalarProperty Name="grd_created_at" ColumnName="grd_created_at" />
+                <ScalarProperty Name="grd_updated_at" ColumnName="grd_updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_list_mat" FunctionName="RegistroModel.Store.sp_list_mat">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RegistroModel.sp_list_mat_Result">
+                <ScalarProperty Name="mat_id" ColumnName="mat_id" />
+                <ScalarProperty Name="mat_nombre" ColumnName="mat_nombre" />
+                <ScalarProperty Name="mat_created_at" ColumnName="mat_created_at" />
+                <ScalarProperty Name="mat_updated_at" ColumnName="mat_updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_list_mxg" FunctionName="RegistroModel.Store.sp_list_mxg">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RegistroModel.sp_list_mxg_Result">
+                <ScalarProperty Name="mxg_id" ColumnName="mxg_id" />
+                <ScalarProperty Name="mxg_id_grad" ColumnName="mxg_id_grad" />
+                <ScalarProperty Name="mxg_id_mat" ColumnName="mxg_id_mat" />
+                <ScalarProperty Name="mxg_created_at" ColumnName="mxg_created_at" />
+                <ScalarProperty Name="mxg_updated_at" ColumnName="mxg_updated_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_delete_alm" FunctionName="RegistroModel.Store.sp_delete_alm" />
+          <FunctionImportMapping FunctionImportName="sp_eliminar_grd" FunctionName="RegistroModel.Store.sp_eliminar_grd" />
+          <FunctionImportMapping FunctionImportName="sp_eliminar_mat" FunctionName="RegistroModel.Store.sp_eliminar_mat" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
